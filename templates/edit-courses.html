@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="modern-section">
+        <div class="section-header">
+            <h1 class="section-title">Edit Your Course Selections</h1>
+            <p class="section-subtitle">Update your enrolled courses and save changes</p>
+        </div>
+    <div class="container-course">
+        {% if fields %}
+            <form method="POST" id="editCoursesForm">
+                {% csrf_token %}
+                <div class="sidebar-layout">
+                    <div class="categories-sidebar">
+                        <h3 class="sidebar-title">Fields</h3>
+                        {% for field in fields %}
+                            <div class="category-item" data-field="{{ field.id }}" onclick="showFieldCourses('{{ field.id }}')">
+                                <i class="fas fa-book"></i>
+                                <span>{{ field.name }}</span>
+                                <span class="course-count">({{ field.course_count }})</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="courses-content container">
+                        {% for field in fields %}
+                            <div class="field-courses" id="field-{{ field.id }}" style="{% if not forloop.first %}display: none;{% endif %}">
+                                <div class="field-header-info">
+                                    <h2 class="field-title">{{ field.name }} Courses</h2>
+                                    <p class="field-description">{{ field.description|default:"Update your enrollment in this field" }}</p>
+                                </div>
+                                
+                                <div class="courses-grid">
+                                    {% for course in field.courses.all %}
+                                        <div class="course-item">
+                                            <div class="course-image">
+                                               <img src="{% if course.image %}
+                                        {{ course.image.url }}
+                                        {% else %}
+                                        {% static 'images/default.jpg' %}
+                                        {% endif %}" alt="{{ course.title }}" />
+                                                <div class="course-overlay">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="course-details">
+                                                <h3 class="course-name">{{ course.title }}</h3>
+                                                <p class="course-description">
+                                                    {% if course.description %}
+                                                        {{ course.description|truncatechars:120 }}
+                                                    {% else %}
+                                                        Explore comprehensive topics in {{ course.title }}.
+                                                    {% endif %}
+                                                </p>
+                                                
+                                                <label class="course-checkbox-wrapper {% if course.is_enrolled %}enrolled{% endif %}">
+                                                    <input type="checkbox" name="courses" value="{{ course.id }}" class="course-checkbox" {% if course.is_enrolled %}checked{% endif %}>
+                                                    <span class="checkbox-custom"></span>
+                                                    <span class="checkbox-label">
+                                                        {% if course.is_enrolled %}
+                                                            <i class="fas fa-check-circle enrolled-icon"></i>
+                                                            Currently Enrolled
+                                                        {% else %}
+                                                            Add to Enrollment
+                                                        {% endif %}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">
+                    <i class="fas fa-save"></i> Update Courses</button>
+                    
+                    <a href="{% url 'my_courses' %}" class="btn btn-secondary btn-large">
+                    <i class="fas fa-times"></i> Cancel</a>
+                </div>
+                    </div>
+                </div>
+    </form>
+
+            {% if enrolled_course_ids %}
+            <div class="enrollment-summary container">
+                <h4><i class="fas fa-info-circle"></i> Current Enrollment Status</h4>
+                <p>You are currently enrolled in <strong>{{ enrolled_course_ids|length }}</strong> course{{ enrolled_course_ids|length|pluralize }}.</p>
+            </div>
+            {% endif %}
+
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h3>No Courses Available</h3>
+                <p>There are no courses in the system yet. Please contact an administrator.</p>
+                <a href="{% url 'my_courses' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Back to My Courses
+                </a>
+            </div></div>
+        {% endif %}
+</section>
+
+<script>
+    function showFieldCourses(fieldId) {
+        document.querySelectorAll('.field-courses').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        document.getElementById('field-' + fieldId).style.display = 'block';
+        document.querySelector(`[data-field="${fieldId}"]`).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstCategory = document.querySelector('.category-item');
+        if (firstCategory) {
+            firstCategory.classList.add('active');
+        }
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,133 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+    background: rgb(249, 249, 249);
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+}
+
+.dashboard-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #f9f9f9;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-section h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-bottom: 2px solid  #ff6b6b;
+    padding-bottom: 0.5rem;
+    font-size: 2.4rem;
+}
+
+.video-list, .course-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.video-item{
+    display: flex;
+    margin-bottom: 1.5rem;
+    background: #564ba2;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-thumbnail{
+    position: relative;
+    width: 160px;
+    flex-shrink: 0;
+}
+
+.video-thumbnail img{
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+}
+
+.completed-badge, .new-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 150, 0, 0.8);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.new-badge {
+    background: rgba(255, 0, 0, 0.8);
+    border-radius: 4px;
+    width: auto;
+    padding: 2px 6px;
+}
+
+.video-info{
+    padding: 10px 15px;
+    flex-grow: 1;
+}
+
+.video-info h3{
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+}
+
+.video-info p {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: #eee;
+}
+
+.video-date {
+    font-size: 0.8rem !important;
+    color: #888 !important;
+}
+
+.empty-state {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin: 2rem 0;
+}
+

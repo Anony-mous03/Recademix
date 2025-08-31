@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="modern-section">
+    <div class="section-header">
+        <h1 class="section-title">Course Registration</h1>
+        <p class="section-subtitle">Choose from our comprehensive range of courses across different fields</p>
+    </div>
+    <div class="container-course">
+    <form method="POST" id="courseRegistrationForm">
+        {% csrf_token %}
+        <div class="sidebar-layout">
+            <div class="categories-sidebar">
+                <h3 class="sidebar-title">Fields</h3>
+                <p>Start by choosing a field</p>               
+                
+                <div class="field-search-wrapper">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="fieldSearch" placeholder="Search fields..." class="field-search-input">
+                        <button type="button" id="clearSearch" class="clear-search-btn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="field-list" id="fieldList">
+                    {% for field in fields %}
+                        <div class="category-item" data-field="{{ field.id }}" data-field-name="{{ field.name|lower }}" onclick="showFieldCourses('{{ field.id }}')">
+                            <i class="fas fa-book"></i>
+                            <span>{{ field.name }}</span>
+                            <span class="course-count">({{ field.course_count }})</span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="no-fields-found" id="noFieldsFound" style="display: none;">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <p>No fields match your search</p>
+                </div>
+            </div>
+
+            <div class="courses-content container">
+                {% for field in fields %}
+                    <div class="field-courses" id="field-{{ field.id }}" style="{% if not forloop.first %}display: none;{% endif %}">
+                        <div class="field-header-info">
+                            <h2 class="field-title">{{ field.name }} Courses</h2>
+                            <p class="field-description">{{ field.description|default:"Explore courses in this field" }}</p>
+                        </div>
+                        
+                        <div class="courses-grid">
+                            {% for course in field.courses.all %}
+                                <div class="course-item">
+                                    <div class="course-image">
+                                        <img src="{% if course.image %}
+                                        {{ course.image.url }}
+                                        {% else %}
+                                        {% static 'images/default.jpg' %}
+                                        {% endif %}" alt="{{ course.title }}" />
+                                        <div class="course-overlay">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="course-details">
+                                        <h3 class="course-name">{{ course.title }}</h3>
+                                        <p class="course-description">
+                                            {% if course.description %}
+                                                {{ course.description|truncatechars:120 }}
+                                            {% else %}
+                                                Explore comprehensive topics in {{ course.title }}. Enhance your skills today!
+                                            {% endif %}
+                                        </p>
+                                        
+                                        <label class="course-checkbox-wrapper">
+                                            <input type="checkbox" name="course" value="{{ course.id }}" class="course-checkbox">
+                                            <span class="checkbox-custom"></span>
+                                            <span class="checkbox-label">Select Course</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">
+                <i class="fas fa-check"></i> Register for Selected Courses
+            </button>
+        </div></div>
+    </form>
+</section>
+
+<script>
+    // Field filtering functionality
+    function initializeFieldSearch() {
+        const searchInput = document.getElementById('fieldSearch');
+        const clearBtn = document.getElementById('clearSearch');
+        const fieldList = document.getElementById('fieldList');
+        const noFieldsFound = document.getElementById('noFieldsFound');
+        const categoryItems = document.querySelectorAll('.category-item');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleFields = 0;
+
+            categoryItems.forEach(item => {
+                const fieldName = item.getAttribute('data-field-name');
+                const isVisible = fieldName.includes(searchTerm);
+                
+                item.style.display = isVisible ? 'flex' : 'none';
+                if (isVisible) visibleFields++;
+            });
+
+            // Show/hide clear button
+            clearBtn.style.display = searchTerm ? 'flex' : 'none';
+
+            // Show/hide no results message
+            if (visibleFields === 0 && searchTerm) {
+                fieldList.style.display = 'none';
+                noFieldsFound.style.display = 'block';
+            } else {
+                fieldList.style.display = 'block';
+                noFieldsFound.style.display = 'none';
+            }
+
+            // Auto-select first visible field if current selection is hidden
+            const activeField = document.querySelector('.category-item.active');
+            if (!activeField || activeField.style.display === 'none') {
+                const firstVisible = document.querySelector('.category-item[style="display: flex;"], .category-item:not([style])');
+                if (firstVisible && visibleFields > 0) {
+                    const fieldId = firstVisible.getAttribute('data-field');
+                    showFieldCourses(fieldId);
+                }
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+        });
+    }
+
+    function showFieldCourses(fieldId) {
+        document.querySelectorAll('.field-courses').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        document.getElementById('field-' + fieldId).style.display = 'block';
+        document.querySelector(`[data-field="${fieldId}"]`).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeFieldSearch();
+        
+        const firstCategory = document.querySelector('.category-item');
+        if (firstCategory) {
+            firstCategory.classList.add('active');
+        }
+    });
+</script>
+{% endblock content %}

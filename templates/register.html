@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1 class="auth-title">Join RecademiX</h1>
+                    <p class="auth-subtitle">Create your account and start learning today</p>
+                </div>
+                
+                <form class="auth-form" method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name" class="form-label">
+                        <i class="fas fa-user"></i> First Name</label>
+                        <input type="text" id="first_name" name="firstname" class="form-input" placeholder="Enter your first name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last_name" class="form-label">
+                        <i class="fas fa-user"></i> Last Name</label>
+                        <input type="text" id="last_name" name="lastname" class="form-input" placeholder="Enter your last name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                        <i class="fas fa-at"></i> Username</label>
+                        <input type="text" id="username" name="username" class="form-input" placeholder="Choose a username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                       
+                    <div class="form-group">
+                         <label for="location" class="form-label">
+                        <i class="fas fa-map-marker-alt"></i> Location (Optional)</label>
+                        <input type="text" id="location" name="location" class="form-input" placeholder="Lagos, Nigeria">
+                    </div>
+
+                    <div class="form-group">
+                    <div class="form-group avatar-upload-group">
+                        <label for="avatar" class="form-label avatar-label">
+                        <i class="fas fa-camera"></i> Profile Picture (Optional) </label>
+
+                        <div class="avatar-upload-wrapper">
+                            <div class="avatar-preview" id="avatarPreview">
+                            <i class="fas fa-user-circle default-avatar"></i>
+                            <img id="previewImage" class="preview-image" style="display: none;">
+                        </div>
+                        <div> 
+                            <input type="file" id="avatar" name="avatar" class="form-file" accept="image/*" onchange="previewAvatar(this)">
+                             <label for="avatar" class="button"><i class="fas fa-upload"></i> Choose Photo</label>
+                            <p class="upload-hint">JPG, PNG or GIF (Max 5MB)</p>
+                        </div>
+                    </div>
+                     </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="password1" name="password1" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password2" class="form-label">
+                        <i class="fas fa-lock"></i> Confirm Password</label>
+                        <input type="password" id="password2" name="password2" class="form-input" placeholder="Confirm your password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large btn-full">
+                        <i class="fas fa-user-plus"></i>Create Account</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="{% url 'signin' %}" class="auth-link">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const previewImage = document.getElementById('previewImage');
+        const defaultAvatar = document.querySelector('.default-avatar');
+        
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block';
+            defaultAvatar.style.display = 'none';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+{% endblock content %}

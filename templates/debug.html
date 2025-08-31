@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug - Database Content</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .section h3 { margin-top: 0; color: #333; }
+        .item { background: #f9f9f9; margin: 5px 0; padding: 10px; border-radius: 3px; }
+        .error { color: red; }
+        .success { color: green; }
+        .count { font-weight: bold; color: #0066cc; }
+    </style>
+</head>
+<body>
+    <h1>Database Debug Information</h1>
+    
+    <div class="section">
+        <h3>Fields <span class="count">({{ debug_info.fields|length }} total)</span></h3>
+        {% if debug_info.fields %}
+            {% for field in debug_info.fields %}
+                <div class="item">
+                    <strong>{{ field.name }}</strong> (ID: {{ field.id }}) - 
+                    <span class="count">{{ field.course_count }} courses</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="error">No fields found in database!</div>
+        {% endif %}
+    </div>
+    
+    <div class="section">
+        <h3>Courses <span class="count">({{ debug_info.courses|length }} total)</span></h3>
+        {% if debug_info.courses %}
+            {% for course in debug_info.courses %}
+                <div class="item">
+                    <strong>{{ course.title }}</strong> (ID: {{ course.id }})<br>
+                    Field: {{ course.field }}<br>
+                    Topics: {{ course.topic_count }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="error">No courses found in database!</div>
+        {% endif %}
+    </div>
+    
+    {% if user.is_authenticated %}
+    <div class="section">
+        <h3>Your Enrolled Courses <span class="count">({{ debug_info.user_courses|length }} total)</span></h3>
+        {% if debug_info.user_courses %}
+            {% for uc in debug_info.user_courses %}
+                <div class="item">
+                    <strong>{{ uc.course_title }}</strong><br>
+                    Enrolled: {{ uc.enrolled_date }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="error">You haven't enrolled in any courses yet!</div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="section">
+        <div class="error">Please log in to see your enrolled courses.</div>
+    </div>
+    {% endif %}
+    
+    <div style="margin-top: 30px;">
+        <a href="{% url 'registration' %}" style="background: #0066cc; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Go to Registration</a>
+        <a href="{% url 'courses' %}" style="background: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-left: 10px;">Go to Courses</a>
+    </div>
+</body>
+</html>

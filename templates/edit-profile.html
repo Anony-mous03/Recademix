@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="modern-section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">Edit Profile</h1>
+            <p class="section-subtitle">Update your personal information and preferences</p>
+        </div>
+
+        <div class="auth-container" style="margin: 1px auto;">
+            <div class="auth-card">
+
+                <div class="avatar-upload-section">
+                    <div class="current-avatar">
+                        {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="{{ user.get_full_name|default:user.username }}" class="avatar-image" id="avatar-preview">
+                        {% else %}
+                            <div class="default-avatar" id="avatar-preview">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="avatar-upload-controls">
+                        <h4>Profile Picture</h4>
+                        <p class="upload-hint">Choose a photo that represents you</p>
+                    </div>
+                </div>
+
+            <form method="POST" enctype="multipart/form-data" class="auth-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="avatar-upload-wrapper">
+                            <div class="avatar-preview">
+                                {% if user.profile.avatar %}
+                                    <img src="{{ user.profile.avatar.url }}" alt="Current Avatar" class="preview-image">
+                                {% else %}
+                                    <div class="default-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="upload-content">
+                                <label for="avatar" class="btn btn-secondary">
+                                <i class="fas fa-camera"></i> Choose Photo
+                                </label>
+                                <input type="file" name="avatar" id="avatar" class="form-file" accept="image/*">
+                                <p class="upload-hint">JPG, PNG or GIF (max 2MB)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-user-circle"></i> Username</label>
+                        <input type="text" name="username" id="username" value="{{ user.username }}" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first_name" class="form-label">
+                            <i class="fas fa-user"></i> First Name</label>
+                        <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-input" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name" class="form-label">
+                            <i class="fas fa-user"></i> Last Name</label>
+                        <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-input" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" name="email" id="email" value="{{ user.email }}" class="form-input" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location" class="form-label">
+                            <i class="fas fa-map-marker-alt"></i> Location</label>
+                        <input type="text" name="location" id="location" value="{{ user.profile.location|default:'' }}" class="form-input" placeholder="City, Country">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-save"></i> Save Changes</button>
+
+                        <a href="{% url 'profile' %}" class="btn btn-secondary btn-full">
+                            <i class="fas fa-times"></i> Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
