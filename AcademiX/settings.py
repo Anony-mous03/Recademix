@@ -137,4 +137,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'  
 MEDIA_ROOT = BASE_DIR / 'media'
 
-YOUTUBE_API_KEY = 'AIzaSyDY6XaQbjNWNC-VueqplEO2wbALuU1hgb0'
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
