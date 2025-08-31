@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="modern-section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">My Profile</h1>
+            <p class="section-subtitle">Manage your account information and track your learning progress</p>
+        </div>
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+
+        <div class="profile-avatar">
+            {% if user.profile.avatar %}
+              <img src="{{ user.profile.avatar.url }}" alt="{{ user.get_full_name|default:user.username }}" class="avatar-image">
+            {% else %}
+              <i class="fas fa-user-circle"></i>
+            {% endif %}
+        </div>
+                    <div class="profile-info">
+                        <h2 class="profile-name">{{ user.get_full_name|default:user.username }}</h2>
+                        <p class="profile-email">{{ user.email }}</p>
+                        <div class="profile-badges">
+                            <span class="profile-badge">Active Learner</span>
+                            {% if profile_completion == 100 %}
+                                <span class="profile-badge badge-complete">Profile Complete</span>
+                            {% endif %}
+                        </div>
+                    </div>
+    </div>
+
+                <div class="profile-progress">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Profile Completion</span>
+                            <span class="progress-percent">{{ profile_completion }}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ profile_completion }} %"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">{{ enrolled_courses_count }}</div>
+                        <div class="stat-label">Enrolled Courses</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-number">{{ completed_videos_count }}</div>
+                        <div class="stat-label">Videos Watched</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-number">{{ user.date_joined|date:"M Y" }}</div>
+                        <div class="stat-label">Member Since</div>
+                    </div>
+                </div>
+                    {% if user.location %}
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ user.location }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Last login {{ user.last_login|timesince }} ago</span>
+                    </div>
+
+                    <div class="profile-actions">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="{% url 'signout' %}" class="alt-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

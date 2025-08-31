@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="modern-section">
+    <div class="container">
+       <div class="course-hero">
+            <div class="course-hero-image">
+                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                <div class="hero-overlay"></div>
+            </div>
+
+            <div class="course-hero-content">
+                <h1 class="section-title">{{ course.title }}</h1>
+                <p class="section-subtitle">Explore all topics and videos for this course</p>
+            </div>
+        </div>
+
+        <div class="course-info-header">
+            <div class="course-meta">
+                <div class="meta-item">
+                    <i class="fas fa-book"></i>
+                    <span>{{ course.field.name }}</span>
+                </div>
+
+                <div class="meta-item">
+                    <i class="fas fa-play-circle"></i>
+                    <span>{{ topics.count }} Topics</span>
+                </div>
+
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>{{ completed_count }}/{{ topics.count }} Completed</span>
+                </div>
+            </div>
+            <button id="refreshVideosBtn" class="btn btn-primary" style="margin-right: 10px;">
+                <i class="fas fa-sync-alt"></i> Refresh Videos</button>
+
+            <a href="{% url 'my_courses' %}" class="btn back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Courses</a>
+        </div>
+
+        <div id="loadingIndicator" style="display: none; text-align: center; margin: 20px 0;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea;"></i>
+            <p>Refreshing videos, please wait...</p>
+        </div>
+        <div id="messageArea" style="display: none; margin: 20px 0; padding: 15px; border-radius: 10px; text-align: center;"></div>
+
+        {% if not topics %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>No Topics Available</h3>
+                <p>This course doesn't have any topics yet. Check back later!</p>
+                <a href="{% url 'my_courses' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Courses</a>
+            </div>
+        {% else %}
+
+        <div class="topics-grid">
+                {% for topic in topics %}
+                    <div class="topic-item {% if topic.progress and topic.progress.completed %}completed{% endif %}">
+                        <div class="topic-image">
+                            <img src="https://img.youtube.com/vi/{{ topic.video_id }}/maxresdefault.jpg" 
+                                 alt="{{ topic.name }}" />
+                            <div class="topic-overlay">
+                                <div class="play-button">
+                                    <a href="{{ topic.url }}" target="_blank" style="text-decoration: none; color: #667eea;">
+                                        <i class="fas fa-play"></i></a>
+                                </div>
+                                {% if topic.progress and topic.progress.completed %}
+                                    <div class="completed-badge">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="topic-details">
+                            <h3 class="topic-name">{{ topic.name }}</h3>
+                            
+                            <p class="topic-description">
+                                {% if topic.description %}
+                                    {{ topic.description|truncatechars:150 }}
+                                {% else %}
+                                    Learn more about {{ topic.name }} in this comprehensive video tutorial.
+                                {% endif %}
+                            </p>
+                            
+                            <a href="{{ topic.url }}" class="view-btn" target="_blank">
+                                <i class="fas fa-play"></i> Watch Video</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const refreshBtn = document.getElementById('refreshVideosBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const messageArea = document.getElementById('messageArea');
+        
+        refreshBtn.addEventListener('click', function() {
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            messageArea.style.display = 'none';
+            
+            // Disable the button while processing
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            
+            // Make AJAX request to refresh videos
+            fetch('{% url "refresh_videos" course.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                
+                // Show success or error message
+                messageArea.style.display = 'block';
+                if (data.success) {
+                    messageArea.style.backgroundColor = '#d4edda';
+                    messageArea.style.color = '#155724';
+                    messageArea.innerHTML = '<i class="fas fa-check-circle"></i> ' + data.message;
+                    
+                    // Reload the page after a short delay to show the new videos
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    messageArea.style.backgroundColor = '#f8d7da';
+                    messageArea.style.color = '#721c24';
+                    messageArea.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error: ' + data.error;
+                    
+                    // Re-enable the button
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Videos';
+                }
+            })
+            .catch(error => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                
+                // Show error message
+                messageArea.style.display = 'block';
+                messageArea.style.backgroundColor = '#f8d7da';
+                messageArea.style.color = '#721c24';
+                messageArea.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error: ' + error.message;
+                
+                // Re-enable the button
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Videos';
+            });
+        });
+    });
+</script>
+{% endblock content %}
+
+
+
+
+

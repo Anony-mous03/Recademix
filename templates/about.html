@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .stat-label, .stat-number {
+        color: white;
+    }
+</style>
+<section class="modern-section">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="section-header">
+            <h1 class="section-title">About RecademiX</h1>
+            <p class="section-subtitle">Revolutionizing education through intelligent course recommendations and curated video content</p>
+        </div>
+
+        <!-- Mission Statement -->
+        <div class="feature-card">
+            <div class="feature-icon about-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2 class="section-title">Our Mission</h2>
+            <p class="section-subtitle">
+                To democratize quality education by providing students with personalized learning experiences through 
+                AI-powered course recommendations and carefully curated educational content, making learning accessible, 
+                engaging, and effective for everyone.
+            </p>
+        </div>
+
+        <!-- Platform Stats -->
+        <div class="course-stats" style="margin: 4rem 0;">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Course Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Educational Videos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <!-- What Makes Us Different -->
+        <div class="section-header">
+            <h2 class="section-title">What Makes Us Different</h2>
+            <p class="section-subtitle">Combining technology with educational expertise for superior learning outcomes</p>
+        </div>
+
+        <div class="features-grid" style="margin-top: 3rem;">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI-Powered Recommendations</h3>
+                <p>Our intelligent system analyzes your learning patterns and preferences to suggest the most relevant courses and content.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Curated Quality Content</h3>
+                <p>Every video and course is carefully reviewed and selected by our team of education experts to ensure high-quality learning materials.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <h3>Personalized Learning</h3>
+                <p>Adaptive learning paths that adjust to your pace, skill level, and learning objectives for maximum effectiveness.</p>
+            </div>
+        </div>
+
+        <!-- Core Values -->
+        <div class="section-header" style="margin-top: 5rem;">
+            <h2 class="section-title">Our Core Values</h2>
+            <p class="section-subtitle">The principles that guide everything we do</p>
+        </div>
+
+        <div class="features-grid" style="margin-top: 3rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Accessibility</h3>
+                <p>Quality education should be available to everyone, regardless of background or circumstances.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Innovation</h3>
+                <p>Continuously evolving our platform with cutting-edge technology to enhance learning experiences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Excellence</h3>
+                <p>Committed to maintaining the highest standards in content quality and platform performance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Community</h3>
+                <p>Building a supportive learning community where students can grow and succeed together.</p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="section-header" style="margin-top: 5rem;">
+            <h2 class="section-title">How RecademiX Works</h2>
+            <p class="section-subtitle">Your journey from enrollment to mastery</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number one">1</div>
+                <h3>Create Your Profile</h3>
+                <p>Sign up and tell us about your learning goals, interests, and specified course(s) to personalize your experience.</p>
+            </div>
+            <div class="step">
+                <div class="step-number two">2</div>
+                <h3>Discover Courses</h3>
+                <p>Browse our extensive catalog of courses across multiple fields.</p>
+            </div>
+            <div class="step">
+                <div class="step-number three">3</div>
+                <h3>Learn & Progress</h3>
+                <p>Access curated video content, track your progress, and receive personalized recommendations as you advance.</p>
+            </div>
+            <div class="step">
+                <div class="step-number four">4</div>
+                <h3>Achieve Your Goals</h3>
+                <p>Complete courses, build your skills, and unlock new opportunities with your enhanced knowledge and expertise.</p>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="section-header" style="margin-top: 5rem;">
+            <h2 class="section-title">Built with Modern Technology</h2>
+            <p class="section-subtitle">Leveraging the latest technologies for optimal performance and user experience</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3>Django Framework</h3>
+                <p>Robust backend built with Django for scalability, security, and rapid development.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <h3>YouTube Integration</h3>
+                <p>Seamless integration with YouTube API for accessing vast educational content libraries.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Smart Algorithms</h3>
+                <p>Advanced recommendation algorithms that learn from user behavior and preferences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Responsive Design</h3>
+                <p>Mobile-first design ensuring optimal experience across all devices and screen sizes.</p>
+            </div>
+        </div>
+
+        <!-- Contact Call-to-Action -->
+        <div class="feature-card about-card" style="margin-top: 5rem;">
+            <div class="feature-icon about-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">
+                Have questions about RecademiX or want to learn more about our platform? 
+                We'd love to hear from you and help you on your learning journey.
+            </p>
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Contact Us
+                </a>
+                <a href="{% url 'signup' %}" class="btn btn-secondary">
+                    <i class="fas fa-rocket"></i> Start Learning
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

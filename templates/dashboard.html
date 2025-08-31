@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="dashboard-container">
+    <div class="section-header">
+        <h1 class="section-title">Welcome, {{ user.first_name|default:user.username }}!</h1>
+        <p class="section-subtitle">Track your learning progress and discover new videos.</p>
+    </div>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <i class="fas fa-book"></i>
+            <h3>{{ course_count }}</h3>
+            <p>Courses Enrolled</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-video"></i>
+            <h3>{{ videos_watched }}</h3>
+            <p>Videos Watched</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-check-circle"></i>
+            <h3>{{ videos_completed }}</h3>
+            <p>Videos Completed</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>{{ completion_percentage|floatformat:1 }}%</h3>
+            <p>Completion Rate</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-sections">
+        <div class="dashboard-section">
+            <h2>Recently Watched</h2>
+
+            {% if recent_videos %}
+                <ul class="video-list">
+                    {% for progress in recent_videos %}
+                        {% with progress.topic.url|cut:'https://www.youtube.com/embed/' as video_id %}
+                        <li class="video-item">
+
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/{{ video_id }}/0.jpg" alt="{{ progress.topic.name }}">
+                                {% if progress.completed %}
+                                <span class="completed-badge"><i class="fas fa-check"></i></span>
+                                {% endif %}
+                            </div>
+
+                            <div class="video-info">
+                                <h3>{{ progress.topic.name }}</h3>
+                                <p>{{ progress.topic.course.title }}</p>
+                                <p class="video-date">Last watched: {{ progress.watched_date|date:"M d, Y" }}</p>
+                                <a href="{{ progress.topic.url }}" class="watch-btn" target="_blank">Continue Watching</a>
+                            </div>
+                        </li>
+                        {% endwith %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-state">You haven't watched any videos yet.</p>
+            {% endif %}
+        </div>
+        
+        <div class="dashboard-section">
+            <h2>Recommended For You</h2>
+            {% if recommended_videos %}
+
+                <ul class="video-list">
+                    {% for topic in recommended_videos %}
+                        {% with topic.url|cut:'https://www.youtube.com/embed/' as video_id %}
+                        <li class="video-item">
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/{{ video_id }}/0.jpg" alt="{{ topic.name }}">
+                                <span class="new-badge">New</span>
+                            </div>
+                            <div class="video-info">
+                                <h3>{{ topic.name }}</h3>
+                                <p>{{ topic.course.title }}</p>
+                                <a href="{{ topic.url }}" class="view-btn watch-btn" data-topic-id="{{ topic.id }}" target="_blank">Watch Now</a>
+                            </div>
+                        </li>
+                        {% endwith %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-state">No recommendations available. Try enrolling in more courses!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript to track video progress when clicking on video links
+    document.addEventListener('DOMContentLoaded', function() {
+        const watchButtons = document.querySelectorAll('.watch-btn');
+        
+        watchButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const topicId = this.getAttribute('data-topic-id');
+                if (topicId) {
+                    // Send AJAX request to track that user started watching this video
+                    fetch('{% url "track_progress" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            topic_id: topicId,
+                            duration: 0,
+                            completed: false
+                        })
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .stat-label, .stat-number{
+        color: white;
+    }
+</style>
+
+<section class="modern-section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">My Learning Journey</h1>
+            <p class="section-subtitle">Continue your educational progress with your enrolled courses</p>
+        </div>
+        
+    {% if no_courses %}
+        <div class="empty-state">
+            <div class="empty-icon">
+            <i class="fas fa-book-open"></i>
+            </div>
+            <h3>No Courses Yet</h3>
+            <p>Start your learning journey by enrolling in some courses!</p>
+            <a href="{% url 'course_registration' %}" class="btn alt-btn">
+            <i class="fas fa-plus"></i> Browse Courses
+            </a>
+        </div>
+    {% else %}
+        <div class="course-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-number">{{ total_courses }}</div>
+                <div class="stat-label">Enrolled Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                <i class="fas fa-play-circle"></i>
+                </div>
+                <div class="stat-number">{{ total_topics }}</div>    
+                <div class="stat-label">Total Topics</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-number">{{ progress_percentage }}%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            {% for course in user_courses %}
+                <div class="course-item">
+                    <div class="course-image">
+                        <img src="{% if course.image %}
+                                        {{ course.image.url }}
+                                        {% else %}
+                                        {% static 'images/2.jpeg' %}
+                                        {% endif %}" alt="{{ field.title }}" />
+                        <div class="course-overlay">
+                        <span class="topic-badge">
+                        <i class="fas fa-play"></i> {{ course.topic_count }} Topics</span>
+                        </div>
+                    </div>
+                        
+                    <div class="course-details">
+                        <h3 class="course-name">{{ course.title }}</h3>
+                            <p class="course-description">
+                                {% if course.description %}
+                                    {{ course.description|truncatechars:120 }}
+                                {% else %}
+                                    Explore comprehensive topics and enhance your knowledge in {{ course.title }}. Start your learning journey today!
+                                {% endif %}
+                            </p>
+                            <a href="{% url 'course_topics' course.id %}" class="view-btn">
+                            <i class="fas fa-arrow-right"></i> View Topics
+                            </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+             <a href="{% url 'edit_courses' %}" class="alt-btn" 
+    style="width: 50%; display: block; margin: 10px auto;">Edit Courses</a>
+    </div>
+        {% endif %}   
+</section>
+{% endblock content %}
