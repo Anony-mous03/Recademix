@@ -1,0 +1,160 @@
+.btn,
+.login-btn,
+.register-btn,
+.edit-btn,
+.logout-btn,
+.edit-profile-btn,
+.alt-btn {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+}
+.button{
+        padding: 0.7rem;
+        border-radius: 15px;
+        background-color: #667eea;
+        color: white;
+        margin-left: 15px;
+        cursor: pointer;
+       text-align: center;
+    font-size: 16px;
+    border: none;
+        transition: all 0.3s ease;
+}
+.button:hover{
+    transform: translateY(-2px);
+    background: #1a73e8;
+    color: #efefef;
+}
+.btn:hover,
+.login-btn:hover,
+.register-btn:hover,
+.edit-btn:hover,
+.logout-btn:hover,
+.edit-profile-btn:hover,
+.alt-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: #1a73e8;
+    color: #efefef;
+}
+.contact-btn{
+    display: block;
+    border-radius: 50px;
+     border: none;
+     margin: 1px auto;
+     cursor: pointer;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+.btn-secondary {
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     opacity: 0.9;
+    color: white;
+    border: 2px solid white;
+}
+
+.view-btn, .watch-btn{
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    width: 100%;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.view-btn:hover, .watch-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: white;
+    color: #764ba2;
+}
+
+/*dashboard button*/
+.alt-btn {
+    background: #ff5b5b;;
+    color: white;
+}
+
+.alt-btn:hover {
+    background: #ee4a4a;
+}
+
+.btn-large {
+    padding: 1.25rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.btn-full {
+    width: 100%;
+    justify-content: center;
+}
+.back-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.play-button {
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.topic-item:hover .play-button {
+    transform: scale(1);
+}
+
+
+
+
