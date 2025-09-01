@@ -3867,71 +3867,7 @@
         "user_permissions": []
     }
 },
-{
-    "model": "users.userprofile",
-    "pk": 1,
-    "fields": {
-        "user": [
-            "admin"
-        ],
-        "location": "",
-        "avatar": "profile_pics/4.jpeg",
-        "date_joined": "2025-08-12T23:51:06.703Z",
-        "last_active": "2025-08-30T13:21:29.037Z"
-    }
-},
-{
-    "model": "users.userprofile",
-    "pk": 9,
-    "fields": {
-        "user": [
-            "moeshittu"
-        ],
-        "location": "",
-        "avatar": "",
-        "date_joined": "2025-08-23T12:55:08.386Z",
-        "last_active": "2025-08-23T12:55:08.466Z"
-    }
-},
-{
-    "model": "users.userprofile",
-    "pk": 10,
-    "fields": {
-        "user": [
-            "teenah"
-        ],
-        "location": "",
-        "avatar": "",
-        "date_joined": "2025-08-30T00:40:41.077Z",
-        "last_active": "2025-08-30T01:15:24.411Z"
-    }
-},
-{
-    "model": "users.userprofile",
-    "pk": 11,
-    "fields": {
-        "user": [
-            "charles"
-        ],
-        "location": "",
-        "avatar": "",
-        "date_joined": "2025-09-01T07:51:47.333Z",
-        "last_active": "2025-09-01T07:52:56.751Z"
-    }
-},
-{
-    "model": "users.userprofile",
-    "pk": 12,
-    "fields": {
-        "user": [
-            "chisom"
-        ],
-        "location": "",
-        "avatar": "",
-        "date_joined": "2025-09-01T08:40:56.243Z",
-        "last_active": "2025-09-01T08:40:56.305Z"
-    }
-},
+
 {
     "model": "videos.usercourse",
     "pk": 6,
