@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wft6bhuf!59@=gafd*^97x1rj)yxefhw8mrs2^#_pi^4z*amqk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "True"
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,7 +81,9 @@ WSGI_APPLICATION = 'AcademiX.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL", "sqlite:///./db.sqlite3")
+        default=os.getenv("DATABASE_URL", "sqlite:///./db.sqlite3"),
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
@@ -129,6 +131,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Whitenoise for static files
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# At the top of settings.py
+from pathlib import Path
+
+# Add this near the end of your settings
+if 'RENDER' in os.environ:
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
