@@ -131,13 +131,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Whitenoise for static files
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# At the top of settings.py
-from pathlib import Path
-
-# Add this near the end of your settings
-if 'RENDER' in os.environ:
-    DEBUG = False
-    ALLOWED_HOSTS = ['*']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
