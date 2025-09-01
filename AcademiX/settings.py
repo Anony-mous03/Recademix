@@ -141,12 +141,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
-
-# At the end of settings.py
-if os.getenv('RENDER'):
-    from django.contrib.auth.models import User
-    import django
-    django.setup()
-    
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'charlesadisa5@gmail.com', 'Victina5')
